@@ -18,6 +18,9 @@ const io = new Server(server);
 
 const connection = initSocketIO(io);
 
+app.use(Express.json());
+app.use(Express.urlencoded({ extended: true }));
+
 app.use(
   cors({
     origin: "*",
