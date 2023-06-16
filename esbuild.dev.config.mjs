@@ -34,7 +34,7 @@ const watch = async () => {
                         const req = http.request(
                             {
                                 host: "localhost",
-                                port: process.env.PORT,
+                                port: process.env.PORT || 3000,
                                 path: "/esbuild-rebuilt",
                                 method: "POST",
                             },
