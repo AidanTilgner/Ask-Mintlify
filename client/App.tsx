@@ -1,10 +1,12 @@
 import React from "react";
+import "./Global.scss";
+import styles from "./App.module.scss";
 
 function App() {
   const [count, setCount] = React.useState(0);
 
   return (
-    <div>
+    <div className={styles.App}>
       <p>I am a basic React app :)</p>
       <p>
         For more info, check out{" "}
