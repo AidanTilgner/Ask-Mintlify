@@ -4,7 +4,7 @@ import axios from "axios";
 import config from "../data/config.json";
 import { CreateChatCompletionRequest } from "openai-edge";
 
-const getSystemPrompts = () => {
+const getSystemPrompt = () => {
   const configPrompt = config.model.system.prompt;
 
   const prompt = `
@@ -14,91 +14,153 @@ const getSystemPrompts = () => {
   This context will be injected into the user's message automatically.
   The context is simply additional information that may be useful.
   `;
+
+  return prompt;
+};
+
+export const getPrompts = async (text: string, withRag: boolean) => {
+  try {
+    const context = {
+      ragContext: "",
+    };
+    if (withRag) {
+      const prediction = await getPrediction(text);
+      if (prediction && prediction.intentData?.config?.endpoint) {
+        const baseURL = config.rag.baseUrl;
+
+        const response = await axios.post(
+          `${baseURL}/${prediction.intentData.config.endpoint}`,
+          {
+            ...prediction.intentData.config.body,
+            originalText: text,
+          }
+        );
+
+        const { context: ragContext } = response.data;
+
+        context.ragContext = ragContext;
+      }
+    }
+
+    const systemPrompt = getSystemPrompt();
+    const userPrompt = `
+      ${text}
+
+      ${
+        context.ragContext
+          ? `
+            | SYSTEM INJECTED CONTEXT |
+            "${context.ragContext}"
+            
+            This context has been automatically added to help you formulate your response.
+            | END SYSTEM INJECTED CONTEXT |
+            `
+          : ""
+      }
+      
+    `;
+
+    return {
+      systemPrompt,
+      userPrompt,
+      success: true,
+      ragContext: context.ragContext,
+    };
+  } catch (error) {
+    console.error("Error:", error);
+    return {
+      systemPrompt: "",
+      userPrompt: "",
+      success: false,
+      ragContext: "",
+    };
+  }
 };
 
 export const getResponse = async (text: string, withRag: boolean) => {
   try {
-    if (withRag) {
-      const prediction = await getPrediction(text);
-      const baseURL = config.rag.baseUrl;
+    const prompts = await getPrompts(text, withRag);
 
-      if (!prediction.intentData?.config) {
-        const systemPrompt = config.model.system.prompt;
-        const userPrompt = text;
-
-        const messages: CreateChatCompletionRequest["messages"] = [
-          {
-            role: "system",
-            content: systemPrompt,
-          },
-          {
-            role: "user",
-            content: userPrompt,
-          },
-        ];
-
-        const completion = await getChatCompletion(messages);
-
-        return completion;
-      }
-      const response = await axios.post(
-        `${baseURL}/${prediction.intentData.config.endpoint}`,
-        {
-          ...prediction.intentData.config.body,
-          originalText: text,
-        }
-      );
-
-      const { context: ragContext } = response.data;
-
-      const systemPrompt = config.model.system.prompt;
-      const userPrompt = `
-      ${text}
-
-      | SYSTEM INJECTED CONTEXT |
-      "${ragContext}"
-      
-      This context has been automatically added to help you formulate your response.
-      | END SYSTEM INJECTED CONTEXT |
-    `;
-
-      const messages: CreateChatCompletionRequest["messages"] = [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: userPrompt,
-        },
-      ];
-
-      const completion = await getChatCompletion(messages);
-
-      return completion;
-    } else {
-      const systemPrompt = config.model.system.prompt;
-      const userPrompt = `
-    ${text}
-    `;
-
-      const messages: CreateChatCompletionRequest["messages"] = [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: userPrompt,
-        },
-      ];
-
-      const completion = await getChatCompletion(messages);
-
-      return completion;
+    if (!prompts.success) {
+      return {
+        completion: null,
+        success: false,
+        ragContext: "",
+      };
     }
+
+    const { systemPrompt, userPrompt, ragContext } = prompts;
+
+    const messages: CreateChatCompletionRequest["messages"] = [
+      {
+        role: "system",
+        content: systemPrompt,
+      },
+      {
+        role: "user",
+        content: userPrompt,
+      },
+    ];
+
+    const completion = await getChatCompletion(messages);
+
+    return {
+      completion: completion,
+      success: true,
+      ragContext: ragContext,
+    };
   } catch (error) {
     console.error("Error:", error);
-    return "There was an error.";
+    return {
+      completion: null,
+      success: false,
+      ragContext: "",
+    };
+  }
+};
+
+export const getResponseStream = async (text: string, withRag: boolean) => {
+  try {
+    const prompts = await getPrompts(text, withRag);
+
+    if (!prompts.success) {
+      return {
+        completion: null,
+        success: false,
+        ragContext: "",
+      };
+    }
+
+    const { systemPrompt, userPrompt, ragContext } = prompts;
+
+    const messages: CreateChatCompletionRequest["messages"] = [
+      {
+        role: "system",
+        content: systemPrompt,
+      },
+      {
+        role: "user",
+        content: userPrompt,
+      },
+    ];
+
+    const completion = (await getChatCompletion(
+      messages,
+      "gpt-3.5-turbo",
+      true
+    )) as ReadableStream;
+
+    return {
+      completion: completion,
+      success: true,
+      ragContext: ragContext,
+    };
+  } catch (error) {
+    console.error("Error:", error);
+    return {
+      completion: null,
+      success: false,
+      ragContext: "",
+    };
   }
 };

@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styles from "./TextBox.module.scss";
-import { api } from "../../utils/axios";
 import { Checkbox } from "@mantine/core";
+import { socket, api } from "../../utils/server";
 
 function TextBox() {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState({
+    initialMessage: "",
+    chatResponse: "",
+  });
   const [loadingResponse, setLoadingResponse] = useState(false);
   const [withRag, setWithRag] = useState(false);
+  const [ragContext, setRagContext] = useState("");
 
   const inputRef = React.useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -19,25 +23,49 @@ function TextBox() {
 
   const submitMessage = async () => {
     setLoadingResponse(true);
+    setResponse({
+      initialMessage: message,
+      chatResponse: "",
+    });
     setMessage("");
-    setResponse("");
     api
       .post("/chat", {
         message,
         with_rag: withRag,
+        stream: true,
       })
       .then((res) => {
-        console.log("Data: ", res.data);
-        setResponse(res.data.data.response);
-        setLoadingResponse(false);
+        setRagContext(res.data.data.rag_context);
       })
       .catch((err) => {
-        setResponse("Something went wrong, please try again later");
+        setResponse({
+          initialMessage: message,
+          chatResponse: "Sorry, something went wrong.",
+        });
         setLoadingResponse(false);
       });
   };
 
-  const shouldOpenResponse = loadingResponse || response;
+  const shouldOpenResponse = loadingResponse || response.chatResponse;
+
+  useEffect(() => {
+    socket.on("chat:datastream", (data) => {
+      const done = data.done;
+      setResponse((prev) => {
+        return {
+          initialMessage: prev.initialMessage,
+          chatResponse: prev.chatResponse + data.message_fragment,
+        };
+      });
+      if (done) {
+        setLoadingResponse(false);
+      }
+    });
+
+    return () => {
+      socket.off("chat:datastream");
+    };
+  }, []);
 
   return (
     <div className={styles.askMintlifyBox}>
@@ -77,8 +105,11 @@ function TextBox() {
       </div>
       {shouldOpenResponse && (
         <div className={styles.response}>
-          <p className={styles.responseText}>{response}</p>
-          {!response && <div className={styles.spacer} />}
+          <p className={styles.ragContext}>
+            {withRag && ragContext ? `Retrieved Context: ${ragContext}` : ""}
+          </p>
+          <p className={styles.initialMessage}>{response.initialMessage}</p>
+          <p className={styles.responseText}>{response.chatResponse}</p>
         </div>
       )}
     </div>

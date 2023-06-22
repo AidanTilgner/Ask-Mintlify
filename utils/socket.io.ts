@@ -1,21 +1,26 @@
 import type { Server, Socket } from "socket.io";
 
 const connection: {
-  socket: Socket | null;
+  sockets: Record<string, Socket>;
 } = {
-  socket: null,
+  sockets: {},
 };
 
 export const initSocketIO = (io: Server) => {
   io.on("connection", (sock) => {
     console.info("a user connected");
 
-    connection.socket = sock;
+    connection.sockets[sock.id] = sock;
 
-    connection.socket.on("disconnect", () => {
+    sock.on("disconnect", () => {
       console.info("user disconnected");
+      delete connection.sockets[sock.id];
     });
   });
 
   return io;
+};
+
+export const getSocket = (id: string) => {
+  return connection.sockets[id];
 };

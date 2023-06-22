@@ -1,7 +1,7 @@
 .askMintlifyBox {
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 48px;
 }
 
 .textboxContainer {
@@ -50,7 +50,7 @@
   }
 
   &.responseOpen {
-    top: calc(100% + 48px);
+    top: calc(100% + 60px);
   }
 
   @keyframes loadingResponse {
@@ -77,12 +77,46 @@
 
 .response {
   padding: 42px 18px 24px 18px;
-  box-shadow: 0px 0px 36px 0px rgba(229, 231, 235, 0.15);
+  box-shadow: 0px 0px 36px 0px #77dbf226;
   box-sizing: border-box;
   border-radius: 10px;
   display: flex;
   align-items: center;
   gap: 14px;
+  position: relative;
+
+  .ragContext {
+    position: absolute;
+    top: calc(100% + 24px);
+    left: 0;
+    opacity: 0.535;
+    font-size: 13px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  @keyframes messageIn {
+    0% {
+      transform: translateY(-14px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .initialMessage {
+    position: absolute;
+    top: 9px;
+    left: 48px;
+    font-size: 14px;
+    opacity: 0.65;
+    animation-name: messageIn;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+  }
 
   p {
     font-size: 14px;
