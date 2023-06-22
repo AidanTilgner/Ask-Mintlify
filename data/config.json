@@ -1,6 +1,6 @@
 {
   "rag": {
-    "baseUrl": "https://ask-mintlify-demo.aidantilgner.dev/"
+    "baseUrl": "https://ask-mintlify-demo.aidantilgner.dev/rag"
   },
   "model": {
     "system": {
