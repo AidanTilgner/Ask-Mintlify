@@ -1,9 +1,11 @@
 html {
-  --background-color: #000;
+  --background-color: #0f1117;
   --text-color: #fff;
+  --font-family: "Inter", sans-serif;
 }
 
 body {
   background-color: var(--background-color);
   color: var(--text-color);
+  font-family: var(--font-family);
 }

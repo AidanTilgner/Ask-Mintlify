@@ -1,0 +1,17 @@
+.askMintlify {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 24px;
+  box-sizing: border-box;
+  height: 100vh;
+}
+
+.textboxContainer {
+  box-sizing: border-box;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    width: 50%;
+  }
+}

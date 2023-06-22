@@ -1,0 +1,11 @@
+{
+  "name": "Default Corpus",
+  "locale": "en-US",
+  "data": [
+    {
+      "intent": "cow joke",
+      "utterances": ["cow joke"],
+      "answers": ["GET cow-joke none"]
+    }
+  ]
+}

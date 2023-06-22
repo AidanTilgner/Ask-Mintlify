@@ -105,7 +105,8 @@
     "**/*.ts",
     "client/**/*.ts",
     "client/**/*.tsx",
-    "client/typings.d.ts"
+    "client/typings.d.ts",
+    "types/nlpjs__basic.d.ts"
   ],
   "exclude": ["node_modules", "**/*.json"] // Make sure ts-node-dev also gets this array in package.json
 }

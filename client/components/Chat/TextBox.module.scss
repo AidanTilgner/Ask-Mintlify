@@ -1,0 +1,100 @@
+.askMintlifyBox {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.textboxContainer {
+  display: flex;
+  position: relative;
+}
+
+.textbox {
+  border-radius: 10px;
+  border: none;
+  background: #0f1117;
+  box-shadow: 0px 0px 2px 0px rgba(229, 231, 235, 0.5);
+  height: 45px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 8px 18px 8px 48px;
+  box-sizing: border-box;
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  transition: all 0.5s ease-in-out;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 36px 0px rgba(229, 231, 235, 0.15);
+    padding-left: 50px;
+  }
+
+  &.textBoxResponseOpen {
+    padding-left: 18px;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: absolute;
+  left: 14px;
+  top: calc(50% - 9px);
+  transition: all 0.5s ease-in-out;
+
+  img {
+    vertical-align: middle;
+    height: 18px;
+  }
+
+  &.responseOpen {
+    top: calc(100% + 48px);
+  }
+
+  @keyframes loadingResponse {
+    0% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  &.loadingResponse {
+    animation-name: loadingResponse;
+    animation-duration: 0.75s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+  }
+}
+
+.response {
+  padding: 42px 18px 24px 18px;
+  box-shadow: 0px 0px 36px 0px rgba(229, 231, 235, 0.15);
+  box-sizing: border-box;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .spacer {
+    height: 18px;
+  }
+}
