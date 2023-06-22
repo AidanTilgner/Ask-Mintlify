@@ -1,6 +1,7 @@
 {
   "rag": {
-    "baseUrl": "https://ask-mintlify-demo.aidantilgner.dev/rag"
+    "baseUrl": "https://ask-mintlify-demo.aidantilgner.dev/rag",
+    "devBaseUrl": "http://localhost:3000/rag"
   },
   "model": {
     "system": {

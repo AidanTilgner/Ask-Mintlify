@@ -9,6 +9,22 @@
         "endpoint": "cow-jokes",
         "body": {}
       }
+    },
+    {
+      "intent": "free mints",
+      "utterances": ["free mints", "mints"],
+      "config": {
+        "endpoint": "mintlify/free-mints",
+        "body": {}
+      }
+    },
+    {
+      "intent": "mintlify",
+      "utterances": ["mintlify", "what is mintlify"],
+      "config": {
+        "endpoint": "mintlify/what-is-mintlify",
+        "body": {}
+      }
     }
   ]
 }

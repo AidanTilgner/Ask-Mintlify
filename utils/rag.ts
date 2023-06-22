@@ -3,6 +3,11 @@ import { getPrediction } from "./nlp";
 import axios from "axios";
 import config from "../data/config.json";
 import { CreateChatCompletionRequest } from "openai-edge";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const ISDEV = process.env.NODE_ENV === "development";
 
 const getSystemPrompt = () => {
   const configPrompt = config.model.system.prompt;
@@ -10,9 +15,8 @@ const getSystemPrompt = () => {
   const prompt = `
   ${configPrompt}
 
-  Also, keep in mind that you may be given context to help you formulate your response.
-  This context will be injected into the user's message automatically.
-  The context is simply additional information that may be useful.
+  Also, keep in mind that you may be given context by the system to help formulate your response.
+  If you recieve context, know that it is not specified by the user, but rather by the system, and you should consider it truthful.
   `;
 
   return prompt;
@@ -26,7 +30,7 @@ export const getPrompts = async (text: string, withRag: boolean) => {
     if (withRag) {
       const prediction = await getPrediction(text);
       if (prediction && prediction.intentData?.config?.endpoint) {
-        const baseURL = config.rag.baseUrl;
+        const baseURL = ISDEV ? config.rag.devBaseUrl : config.rag.baseUrl;
 
         const response = await axios.post(
           `${baseURL}/${prediction.intentData.config.endpoint}`,
@@ -49,16 +53,17 @@ export const getPrompts = async (text: string, withRag: boolean) => {
       ${
         context.ragContext
           ? `
-            | SYSTEM INJECTED CONTEXT |
-            "${context.ragContext}"
-            
-            This context has been automatically added to help you formulate your response.
-            | END SYSTEM INJECTED CONTEXT |
+      | SYSTEM INJECTED CONTEXT |
+      "${context.ragContext}"
+      | END SYSTEM INJECTED CONTEXT |
             `
           : ""
       }
       
     `;
+
+    console.log("System prompt:", systemPrompt);
+    console.log("User prompt:", userPrompt);
 
     return {
       systemPrompt,

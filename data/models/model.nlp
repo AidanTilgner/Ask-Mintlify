@@ -39,10 +39,28 @@
           "cow": {
             "intent": "cow joke",
             "domain": "default"
+          },
+          "free,mints": {
+            "intent": "free mints",
+            "domain": "default"
+          },
+          "mints": {
+            "intent": "free mints",
+            "domain": "default"
+          },
+          "mintlify": {
+            "intent": "mintlify",
+            "domain": "default"
+          },
+          "is,mintlify,what": {
+            "intent": "mintlify",
+            "domain": "default"
           }
         },
         "intentDict": {
-          "cow joke": "default"
+          "cow joke": "default",
+          "free mints": "default",
+          "mintlify": "default"
         },
         "sentences": [
           {
@@ -54,6 +72,26 @@
             "domain": "default",
             "utterance": "cow",
             "intent": "cow joke"
+          },
+          {
+            "domain": "default",
+            "utterance": "free mints",
+            "intent": "free mints"
+          },
+          {
+            "domain": "default",
+            "utterance": "mints",
+            "intent": "free mints"
+          },
+          {
+            "domain": "default",
+            "utterance": "mintlify",
+            "intent": "mintlify"
+          },
+          {
+            "domain": "default",
+            "utterance": "what is mintlify",
+            "intent": "mintlify"
           }
         ],
         "domains": {
@@ -71,15 +109,31 @@
             },
             "features": {
               "cow": 1,
-              "joke": 1
+              "joke": 1,
+              "free": 1,
+              "mints": 1,
+              "mintlify": 1,
+              "what": 1,
+              "is": 1
             },
             "intents": {
-              "cow joke": 1
+              "cow joke": 1,
+              "free mints": 1,
+              "mintlify": 1
             },
             "intentFeatures": {
               "cow joke": {
                 "cow": 1,
                 "joke": 1
+              },
+              "free mints": {
+                "free": 1,
+                "mints": 1
+              },
+              "mintlify": {
+                "mintlify": 1,
+                "what": 1,
+                "is": 1
               }
             },
             "featuresToIntent": {
@@ -88,6 +142,21 @@
               ],
               "joke": [
                 "cow joke"
+              ],
+              "free": [
+                "free mints"
+              ],
+              "mints": [
+                "free mints"
+              ],
+              "mintlify": [
+                "mintlify"
+              ],
+              "what": [
+                "mintlify"
+              ],
+              "is": [
+                "mintlify"
               ]
             },
             "neuralNetwork": {
@@ -104,16 +173,48 @@
               },
               "features": [
                 "cow",
-                "joke"
+                "joke",
+                "free",
+                "mints",
+                "mintlify",
+                "what",
+                "is"
               ],
               "intents": [
-                "cow joke"
+                "cow joke",
+                "free mints",
+                "mintlify"
               ],
               "perceptrons": [
                 [
-                  9.451024055480957,
-                  0.18811246752738953,
-                  4.727433768265745
+                  11.244359016418457,
+                  0.37138065695762634,
+                  -0.8488284349441528,
+                  -2.803133249282837,
+                  -2.801243305206299,
+                  -0.5500299334526062,
+                  -0.5500299334526062,
+                  2.8222090370414645
+                ],
+                [
+                  -2.7995336055755615,
+                  -0.8268590569496155,
+                  0.3713502287864685,
+                  11.24436092376709,
+                  -2.8029139041900635,
+                  -0.5554361939430237,
+                  -0.5554361939430237,
+                  2.8231402370987784
+                ],
+                [
+                  -2.8275692462921143,
+                  -0.7434114813804626,
+                  -0.7320920825004578,
+                  -2.8255972862243652,
+                  11.348651885986328,
+                  0.062020737677812576,
+                  0.062020737677812576,
+                  2.84625996506778
                 ]
               ]
             }
@@ -130,6 +231,22 @@
       [
         "en",
         "cow"
+      ],
+      [
+        "en",
+        "free mints"
+      ],
+      [
+        "en",
+        "mints"
+      ],
+      [
+        "en",
+        "mintlify"
+      ],
+      [
+        "en",
+        "what is mintlify"
       ]
     ]
   },

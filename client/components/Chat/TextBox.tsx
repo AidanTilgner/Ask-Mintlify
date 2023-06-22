@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./TextBox.module.scss";
 import { Checkbox } from "@mantine/core";
 import { socket, api } from "../../utils/server";
+import { ArrowsClockwise, X } from "@phosphor-icons/react";
 
 function TextBox() {
   const [open, setOpen] = useState(false);
@@ -14,6 +15,22 @@ function TextBox() {
   const [withRag, setWithRag] = useState(false);
   const [ragContext, setRagContext] = useState("");
 
+  const formatRagContext = (ragContext: string) => {
+    // replace links with anchor tags
+    const regex = /https?:\/\/[^\s]+/g;
+    const matches = ragContext.match(regex);
+    if (matches) {
+      matches.forEach((match) => {
+        ragContext = ragContext.replace(
+          match,
+          `<a href="${match}" target="_blank">${match}</a>`
+        );
+      });
+    }
+    ragContext = ragContext.trim().replace(/\n/g, "<br />");
+    return `Retrieved Context:<br /><br /> ${ragContext}`;
+  };
+
   const inputRef = React.useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (open) {
@@ -21,16 +38,22 @@ function TextBox() {
     }
   }, [open]);
 
-  const submitMessage = async () => {
+  const submitMessage = async (providedMessage?: string) => {
+    const useMessage = providedMessage || message;
+    if (!useMessage) {
+      alert("Please enter a message");
+      return;
+    }
     setLoadingResponse(true);
     setResponse({
-      initialMessage: message,
+      initialMessage: useMessage,
       chatResponse: "",
     });
     setMessage("");
+    setRagContext("");
     api
       .post("/chat", {
-        message,
+        message: useMessage,
         with_rag: withRag,
         stream: true,
       })
@@ -39,7 +62,7 @@ function TextBox() {
       })
       .catch((err) => {
         setResponse({
-          initialMessage: message,
+          initialMessage: useMessage,
           chatResponse: "Sorry, something went wrong.",
         });
         setLoadingResponse(false);
@@ -62,8 +85,27 @@ function TextBox() {
       }
     });
 
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+      }
+      if (e.ctrlKey && e.key === "Enter") {
+        if (!message) {
+          return;
+        }
+        submitMessage();
+      }
+      if (e.ctrlKey && e.key === "p") {
+        inputRef.current?.focus();
+      }
+      if (e.ctrlKey && e.key === "a") {
+        setWithRag((prev) => !prev);
+      }
+    });
+
     return () => {
       socket.off("chat:datastream");
+      window.removeEventListener("keydown", () => {});
     };
   }, []);
 
@@ -71,7 +113,7 @@ function TextBox() {
     <div className={styles.askMintlifyBox}>
       <div className={styles.options}>
         <Checkbox
-          label="With RAG"
+          label="With Retrieval Augmented Generation"
           onChange={(e) => {
             setWithRag(e.currentTarget.checked);
           }}
@@ -104,10 +146,44 @@ function TextBox() {
         </div>
       </div>
       {shouldOpenResponse && (
-        <div className={styles.response}>
-          <p className={styles.ragContext}>
-            {withRag && ragContext ? `Retrieved Context: ${ragContext}` : ""}
-          </p>
+        <div
+          className={`${styles.response} ${
+            loadingResponse && styles.isLoadingResponse
+          }`}
+        >
+          <div className={styles.responseOptions}>
+            <button
+              className={styles.clear}
+              title="Retry"
+              onClick={() => {
+                submitMessage(response.initialMessage);
+              }}
+            >
+              <ArrowsClockwise />
+            </button>
+            <button
+              className={styles.clear}
+              title="Clear"
+              onClick={() => {
+                setResponse({
+                  initialMessage: "",
+                  chatResponse: "",
+                });
+                setRagContext("");
+                setLoadingResponse(false);
+              }}
+            >
+              <X />
+            </button>
+          </div>
+          {withRag && ragContext && (
+            <p
+              className={styles.ragContext}
+              dangerouslySetInnerHTML={{
+                __html: formatRagContext(ragContext),
+              }}
+            />
+          )}
           <p className={styles.initialMessage}>{response.initialMessage}</p>
           <p className={styles.responseText}>{response.chatResponse}</p>
         </div>
