@@ -3,7 +3,7 @@
 module.exports = {
   apps: [
     {
-      name: "[APP NAME]",
+      name: "Ask Mintlify Demo",
       script: "npm run start",
     },
   ],
