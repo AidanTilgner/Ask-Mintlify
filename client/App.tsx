@@ -11,6 +11,19 @@ function App() {
     <MantineProvider
       theme={{
         colorScheme: "dark",
+        colors: {
+          cool_green: [
+            "#6CA18E",
+            "#599C84",
+            "#49967A",
+            "#3A9171",
+            "#2A8E6A",
+            "#1B8C63",
+            "#0C8C5E",
+          ],
+        },
+        primaryColor: "cool_green",
+        primaryShade: 6,
       }}
     >
       <div className={styles.App}>
