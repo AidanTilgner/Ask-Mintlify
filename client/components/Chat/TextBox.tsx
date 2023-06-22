@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./TextBox.module.scss";
+import { api } from "../../utils/axios";
 
 function TextBox() {
   const [open, setOpen] = useState(false);
@@ -17,13 +18,22 @@ function TextBox() {
   const submitMessage = async () => {
     setLoadingResponse(true);
     setMessage("");
-    setTimeout(() => {
-      setResponse("Here is my response!");
-      setLoadingResponse(false);
-    }, 2000);
+    setResponse("");
+    api
+      .post("/chat", {
+        message,
+        with_rag: true,
+      })
+      .then((res) => {
+        console.log("Data: ", res.data);
+        setResponse(res.data.data.response);
+        setLoadingResponse(false);
+      })
+      .catch((err) => {
+        setResponse("Something went wrong, please try again later");
+        setLoadingResponse(false);
+      });
   };
-
-  console.log("Loading response: ", loadingResponse);
 
   const shouldOpenResponse = loadingResponse || response;
 

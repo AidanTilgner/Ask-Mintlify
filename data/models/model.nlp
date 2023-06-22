@@ -35,6 +35,10 @@
           "cow,joke": {
             "intent": "cow joke",
             "domain": "default"
+          },
+          "cow": {
+            "intent": "cow joke",
+            "domain": "default"
           }
         },
         "intentDict": {
@@ -44,6 +48,11 @@
           {
             "domain": "default",
             "utterance": "cow joke",
+            "intent": "cow joke"
+          },
+          {
+            "domain": "default",
+            "utterance": "cow",
             "intent": "cow joke"
           }
         ],
@@ -102,9 +111,9 @@
               ],
               "perceptrons": [
                 [
-                  5.692978382110596,
-                  5.692978382110596,
-                  2.8527748842713336
+                  9.451024055480957,
+                  0.18811246752738953,
+                  4.727433768265745
                 ]
               ]
             }
@@ -117,6 +126,10 @@
       [
         "en",
         "cow joke"
+      ],
+      [
+        "en",
+        "cow"
       ]
     ]
   },
@@ -130,15 +143,7 @@
     "settings": {
       "tag": "nlg-manager"
     },
-    "responses": {
-      "en": {
-        "cow joke": [
-          {
-            "answer": "GET cow-joke none"
-          }
-        ]
-      }
-    }
+    "responses": {}
   },
   "actionManager": {
     "settings": {

@@ -4,8 +4,11 @@
   "data": [
     {
       "intent": "cow joke",
-      "utterances": ["cow joke"],
-      "answers": ["GET cow-joke none"]
+      "utterances": ["cow joke", "cow"],
+      "config": {
+        "endpoint": "cow-jokes",
+        "body": {}
+      }
     }
   ]
 }

@@ -1,4 +1,5 @@
 import { containerBootstrap, Nlp } from "@nlpjs/basic";
+import { readFileSync } from "fs";
 
 const corpus_file = "data/corpus.json";
 
@@ -35,4 +36,33 @@ export const getNLP = async () => {
     return model.nlp;
   }
   return model.nlp;
+};
+
+const getIntentData = async (intent: string) => {
+  const corpus = readFileSync(corpus_file, "utf-8");
+  const data = JSON.parse(corpus).data;
+  const intentData = data.find((d: any) => d.intent === intent);
+  return intentData as {
+    intent: string;
+    utterances: string[];
+    answers: string[];
+    config: {
+      endpoint: string;
+      body: any;
+    };
+  };
+};
+
+export const getPrediction = async (text: string) => {
+  const nlp = await getNLP();
+  const result = await nlp.process("en", text.toLowerCase());
+  return {
+    intent: result.intent as string,
+    score: result.score as string,
+    classifications: result.classifications as {
+      intent: string;
+      score: number;
+    }[],
+    intentData: await getIntentData(result.intent),
+  };
 };

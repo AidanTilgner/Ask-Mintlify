@@ -5,16 +5,15 @@ import {
   ResponseTypes,
 } from "openai-edge";
 import { OpenAIStream } from "ai";
-import { RAGConfig } from "../declarations/main";
+import { config } from "dotenv";
+
+config();
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-const configuration: Configuration = {
+const configuration = new Configuration({
   apiKey: OPENAI_API_KEY,
-  isJsonMime(mime) {
-    return mime === "application/json";
-  },
-};
+});
 
 const openai = new OpenAIApi(configuration);
 
@@ -27,6 +26,7 @@ export const getChatCompletion = async (
     const response = await openai.createChatCompletion({
       model,
       messages,
+      stream,
     });
 
     if (stream) {
@@ -42,10 +42,3 @@ export const getChatCompletion = async (
     return "There was an error.";
   }
 };
-
-export const getChatCompletionWithRAG = async (
-  messages: CreateChatCompletionRequest["messages"],
-  model: CreateChatCompletionRequest["model"] = "davinci",
-  stream: boolean = false,
-  rag: RAGConfig
-) => {};

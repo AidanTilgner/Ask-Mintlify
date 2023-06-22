@@ -1,0 +1,10 @@
+{
+  "rag": {
+    "baseUrl": "http://localhost:3000/rag"
+  },
+  "model": {
+    "system": {
+      "prompt": "You are a useful chatbot that represents the popular documentation tool, Mintlify, on their website."
+    }
+  }
+}
