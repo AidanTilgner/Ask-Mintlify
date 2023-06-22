@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "./TextBox.module.scss";
 import { api } from "../../utils/axios";
+import { Checkbox } from "@mantine/core";
 
 function TextBox() {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [response, setResponse] = useState("");
   const [loadingResponse, setLoadingResponse] = useState(false);
+  const [withRag, setWithRag] = useState(false);
 
   const inputRef = React.useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -22,7 +24,7 @@ function TextBox() {
     api
       .post("/chat", {
         message,
-        with_rag: true,
+        with_rag: withRag,
       })
       .then((res) => {
         console.log("Data: ", res.data);
@@ -39,6 +41,16 @@ function TextBox() {
 
   return (
     <div className={styles.askMintlifyBox}>
+      <div className={styles.options}>
+        <Checkbox
+          label="With RAG"
+          onChange={(e) => {
+            setWithRag(e.currentTarget.checked);
+          }}
+          checked={withRag}
+          color="white"
+        />
+      </div>
       <div className={styles.textboxContainer} onClick={() => setOpen(true)}>
         <input
           className={`${styles.textbox} ${
