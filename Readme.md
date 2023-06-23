@@ -24,7 +24,7 @@ I want a "ChatGPT for my website", so before I prompt ChatGPT directly, I feed i
 
 **Actual Prompt**:
 
-> The User Said: "What is Aidan's contact information?". Here is some additional context to help you answer: "Aidan Tilgner is a software engineer with years of experience in the field. His skills include Typescript, React, REST API development, and other full-stack development tools. He learns fast and on his feet, cares about maintaining quality while keeping a fast-pace, and cares deeply about the end-user. Aidan has worked with large-scale applications, on both the frontend and backend, and is involved in many developer communities. This allows him to keep up to date on the latest technological advancements that may impact his work or future projects. Aidan's email is aidantilgner02@gmail.com, and his phone number is (503)-200-7472. His website is https://aidantilgner.dev."
+> The User Said: "What is Aidan's contact information?". Here is some additional context to help you answer: "Aidan Tilgner is a software engineer with years of experience in the field. His skills include Typescript, React, REST API development, and other full-stack development tools. He learns fast and on his feet, cares about maintaining quality while keeping a fast-pace, and cares deeply about the end-user. Aidan has worked with large-scale applications, on both the frontend and backend, and is involved in many developer communities. This allows him to keep up to date on the latest technological advancements that may impact his work or future projects. Aidan's email is aidantilgner02@gmail.com, and his phone number is (503)-200-7472. His website is https://www.aidantilgner.dev."
 
 **LLM Response**:
 
@@ -50,11 +50,11 @@ Using the same example as above, where the goal is to have a "ChatGPT for your W
 
 **Actual Prompt**:
 
-> The User Said: "What is Aidan's contact information?". Here is some additional context to help you answer: "Aidan's email is aidantilgner02@gmail.com, and his phone number is (503)-200-7472. His website is https://aidantilgner.dev."
+> The User Said: "What is Aidan's contact information?". Here is some additional context to help you answer: "Aidan's email is aidantilgner02@gmail.com, and his phone number is (503)-200-7472. His website is https://www.aidantilgner.dev."
 
 **LLM Response**:
 
-> Aidan's email is aidantilgner02@gmail.com, and his phone number is (503)-200-7472. His website is https://aidantilgner.dev.
+> Aidan's email is aidantilgner02@gmail.com, and his phone number is (503)-200-7472. His website is https://www.aidantilgner.dev.
 
 As you can see, the context provided is much more relevant to the question that was asked, and therefore the LLM is more likely to use it, and less likely to waste tokens.
 
