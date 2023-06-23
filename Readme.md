@@ -67,6 +67,7 @@ Some pre-made prompts to try with and without the checkbox applied:
 - "Tell me a cow joke"
 - "Does Mintlify provide their employees with unlimited free mints?"
 - "What is Mintlify?"
+- "Why should I hire Aidan?"
 
 ### The Code
 

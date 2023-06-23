@@ -25,6 +25,19 @@
         "endpoint": "mintlify/what-is-mintlify",
         "body": {}
       }
+    },
+    {
+      "intent": "why hire Aidan Tilgner",
+      "utterances": [
+        "why hire Aidan Tilgner",
+        "why hire Aidan",
+        "why hire Aidan T",
+        "Why should I hire Aidan?"
+      ],
+      "config": {
+        "endpoint": "aidan/why-hire",
+        "body": {}
+      }
     }
   ]
 }

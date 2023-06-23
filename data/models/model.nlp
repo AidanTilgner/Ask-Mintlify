@@ -55,12 +55,29 @@
           "is,mintlify,what": {
             "intent": "mintlify",
             "domain": "default"
+          },
+          "aidan,hire,tilgner,why": {
+            "intent": "why hire Aidan Tilgner",
+            "domain": "default"
+          },
+          "aidan,hire,why": {
+            "intent": "why hire Aidan Tilgner",
+            "domain": "default"
+          },
+          "aidan,hire,t,why": {
+            "intent": "why hire Aidan Tilgner",
+            "domain": "default"
+          },
+          "aidan,hire,i,should,why": {
+            "intent": "why hire Aidan Tilgner",
+            "domain": "default"
           }
         },
         "intentDict": {
           "cow joke": "default",
           "free mints": "default",
-          "mintlify": "default"
+          "mintlify": "default",
+          "why hire Aidan Tilgner": "default"
         },
         "sentences": [
           {
@@ -92,6 +109,26 @@
             "domain": "default",
             "utterance": "what is mintlify",
             "intent": "mintlify"
+          },
+          {
+            "domain": "default",
+            "utterance": "why hire Aidan Tilgner",
+            "intent": "why hire Aidan Tilgner"
+          },
+          {
+            "domain": "default",
+            "utterance": "why hire Aidan",
+            "intent": "why hire Aidan Tilgner"
+          },
+          {
+            "domain": "default",
+            "utterance": "why hire Aidan T",
+            "intent": "why hire Aidan Tilgner"
+          },
+          {
+            "domain": "default",
+            "utterance": "Why should I hire Aidan?",
+            "intent": "why hire Aidan Tilgner"
           }
         ],
         "domains": {
@@ -114,12 +151,20 @@
               "mints": 1,
               "mintlify": 1,
               "what": 1,
-              "is": 1
+              "is": 1,
+              "why": 1,
+              "hire": 1,
+              "aidan": 1,
+              "tilgner": 1,
+              "t": 1,
+              "should": 1,
+              "i": 1
             },
             "intents": {
               "cow joke": 1,
               "free mints": 1,
-              "mintlify": 1
+              "mintlify": 1,
+              "why hire Aidan Tilgner": 1
             },
             "intentFeatures": {
               "cow joke": {
@@ -134,6 +179,15 @@
                 "mintlify": 1,
                 "what": 1,
                 "is": 1
+              },
+              "why hire Aidan Tilgner": {
+                "why": 1,
+                "hire": 1,
+                "aidan": 1,
+                "tilgner": 1,
+                "t": 1,
+                "should": 1,
+                "i": 1
               }
             },
             "featuresToIntent": {
@@ -157,6 +211,27 @@
               ],
               "is": [
                 "mintlify"
+              ],
+              "why": [
+                "why hire Aidan Tilgner"
+              ],
+              "hire": [
+                "why hire Aidan Tilgner"
+              ],
+              "aidan": [
+                "why hire Aidan Tilgner"
+              ],
+              "tilgner": [
+                "why hire Aidan Tilgner"
+              ],
+              "t": [
+                "why hire Aidan Tilgner"
+              ],
+              "should": [
+                "why hire Aidan Tilgner"
+              ],
+              "i": [
+                "why hire Aidan Tilgner"
               ]
             },
             "neuralNetwork": {
@@ -178,43 +253,89 @@
                 "mints",
                 "mintlify",
                 "what",
-                "is"
+                "is",
+                "why",
+                "hire",
+                "aidan",
+                "tilgner",
+                "t",
+                "should",
+                "i"
               ],
               "intents": [
                 "cow joke",
                 "free mints",
-                "mintlify"
+                "mintlify",
+                "why hire Aidan Tilgner"
               ],
               "perceptrons": [
                 [
-                  11.244359016418457,
-                  0.37138065695762634,
-                  -0.8488284349441528,
-                  -2.803133249282837,
-                  -2.801243305206299,
-                  -0.5500299334526062,
-                  -0.5500299334526062,
-                  2.8222090370414645
+                  11.340920448303223,
+                  0.5304624438285828,
+                  -0.7876139283180237,
+                  -2.606114387512207,
+                  -2.6031417846679688,
+                  -0.5093066692352295,
+                  -0.5093066692352295,
+                  -0.8753190040588379,
+                  -0.8753190040588379,
+                  -0.8753190040588379,
+                  -0.23731768131256104,
+                  -0.14789026975631714,
+                  -0.08082243800163269,
+                  -0.08082243800163269,
+                  2.6312483342518753
                 ],
                 [
-                  -2.7995336055755615,
-                  -0.8268590569496155,
-                  0.3713502287864685,
-                  11.24436092376709,
-                  -2.8029139041900635,
-                  -0.5554361939430237,
-                  -0.5554361939430237,
-                  2.8231402370987784
+                  -2.6005454063415527,
+                  -0.7627352476119995,
+                  0.5303935408592224,
+                  11.340927124023438,
+                  -2.605581045150757,
+                  -0.5139121413230896,
+                  -0.5139121413230896,
+                  -0.8757968544960022,
+                  -0.8757968544960022,
+                  -0.8757968544960022,
+                  -0.23864690959453583,
+                  -0.15273211896419525,
+                  -0.08482035249471664,
+                  -0.08482035249471664,
+                  2.632528688203408
                 ],
                 [
-                  -2.8275692462921143,
-                  -0.7434114813804626,
-                  -0.7320920825004578,
-                  -2.8255972862243652,
-                  11.348651885986328,
-                  0.062020737677812576,
-                  0.062020737677812576,
-                  2.84625996506778
+                  -2.628981351852417,
+                  -0.6860353946685791,
+                  -0.6768573522567749,
+                  -2.625730276107788,
+                  11.466185569763184,
+                  0.10849232226610184,
+                  0.10849232226610184,
+                  -0.8856098651885986,
+                  -0.8856098651885986,
+                  -0.8856098651885986,
+                  -0.21268047392368317,
+                  -0.13185761868953705,
+                  -0.07639539986848831,
+                  -0.07639539986848831,
+                  2.6602488340041393
+                ],
+                [
+                  -0.8814175128936768,
+                  -0.33210209012031555,
+                  -0.33156999945640564,
+                  -0.8811030387878418,
+                  -0.8806548118591309,
+                  -0.21598871052265167,
+                  -0.21598871052265167,
+                  4.4144134521484375,
+                  4.4144134521484375,
+                  4.4144134521484375,
+                  0.22449356317520142,
+                  0.21033290028572083,
+                  0.08806487172842026,
+                  0.08806487172842026,
+                  0.8846884127269861
                 ]
               ]
             }
@@ -247,6 +368,22 @@
       [
         "en",
         "what is mintlify"
+      ],
+      [
+        "en",
+        "why hire Aidan Tilgner"
+      ],
+      [
+        "en",
+        "why hire Aidan"
+      ],
+      [
+        "en",
+        "why hire Aidan T"
+      ],
+      [
+        "en",
+        "Why should I hire Aidan?"
       ]
     ]
   },
