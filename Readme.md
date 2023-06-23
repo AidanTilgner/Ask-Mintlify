@@ -4,7 +4,7 @@ This is a demo of a potential way to optimize the context injection system of th
 
 ### The Problem
 
-There is a problem that plagues integrations of LLMs that utilize context injection, which is context length. There is 1) only so much information that a chatbot can pay "attention" to, and 2) a cost to processing each individual token, (albeit usually a relatively cheap one).
+There is a problem that plagues integrations of LLMs that utilize context injection, which is context length. There is 1) only so much information that a chatbot can pay "attention" to, and 2) a real monetary cost to processing each individual token, (albeit usually a relatively cheap one).
 
 #### Assumptions
 
@@ -30,11 +30,11 @@ I want a "ChatGPT for my website", so before I prompt ChatGPT directly, I feed i
 
 > Aidan's email is aidantilgner02@gmail.com, and his phone number is (503)-200-7472.
 
-As you can see, there is a problem with context added not being relevant to the question that was asked. This is perhaps useful context in some situations, but in cases where the LLM will not end up using the information, it is likely a waste of tokens, and therefore money.
+As you can see, there is a problem with context added not being relevant to the question that was asked. While this context may be useful in certain situations, providing it when the LLM does not utilize the information can be inefficient in terms of token usage and cost.
 
 ### The Solution
 
-So what is the solution? Well, I propose a Retrieval Augmented Generation solution, but not the usual method which utilizes a vector DB. Instead, a custom, low-resource language classification model will be used to determine the intent of the user input, and provide additional context to the LLM based on that intent.
+So, what is the solution? I propose utilizing a Retrieval Augmented Generation approach. However, not the currently popular method which utilizes a vector DB. Instead, a custom, low-resource language classification model will be used to determine the intent of the user input, and provide additional context to the LLM based on that intent.
 
 #### Example
 
@@ -80,6 +80,6 @@ The frontend is a pretty simple React app.
 
 #### The Backend
 
-An express app that uses [nlp.js](https://github.com/axa-group/nlp.js) to classify the intent of the user input. The `data/corpus.json` file provides training data for each intent, as well as an endpoint to call if that intent is classified, in order to recieve context. The `routers/rag/index.ts` file defines the different endpoints, and what context should be sent back for one. In a future implementation, this would be a more complex retrieval system, possibly allowing for variables such as extracted entities to be sent in the form body.
+An express API that uses [nlp.js](https://github.com/axa-group/nlp.js) to classify the intent of the user input. The `data/corpus.json` file provides training data for each intent, as well as an endpoint to call if that intent is classified, in order to recieve context. The `routers/rag/index.ts` file defines the different endpoints, and what context should be sent back for one. In a future implementation, this would be a more complex retrieval system, possibly allowing for variables such as extracted entities to be sent in the form body.
 
 If an intent is classified with a reasonable confidence, then the context is retrieved from the endpoint, and the context is injected into the "user" prompt. The prompt is then sent to the LLM, and the response is returned to the frontend via socket.io, in order to display the real-time stream sent back from OpenAI.
