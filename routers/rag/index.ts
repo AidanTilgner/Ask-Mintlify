@@ -12,7 +12,7 @@ router.post("/cow-jokes", (req, res) => {
 router.post("/mintlify/free-mints", (req, res) => {
   res.send({
     context:
-      "Mintlify does in fact provide free mints to employees, as stated on this page: https://mintlify.notion.site/Engineering-Mintlify-d5bc6b6e72ff4bbeb8b20d6d372ac111 in the 'Company Benefits' section.",
+      "Mintlify does in fact provide free mints to employees, as stated on this page: https://mintlify.notion.site/Engineering-Mintlify-d5bc6b6e72ff4bbeb8b20d6d372ac111 in the 'Company Benefits' section. You should provide them the link.",
   });
 });
 

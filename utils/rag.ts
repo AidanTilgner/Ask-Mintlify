@@ -62,9 +62,6 @@ export const getPrompts = async (text: string, withRag: boolean) => {
       
     `;
 
-    console.log("System prompt:", systemPrompt);
-    console.log("User prompt:", userPrompt);
-
     return {
       systemPrompt,
       userPrompt,

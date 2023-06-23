@@ -16,8 +16,7 @@ function TextBox() {
   const [ragContext, setRagContext] = useState("");
 
   const formatRagContext = (ragContext: string) => {
-    // replace links with anchor tags
-    const regex = /https?:\/\/[^\s]+/g;
+    const regex = /https?:\/\/[^\s()]+/g; // Exclude parentheses from links
     const matches = ragContext.match(regex);
     if (matches) {
       matches.forEach((match) => {
@@ -29,6 +28,21 @@ function TextBox() {
     }
     ragContext = ragContext.trim().replace(/\n/g, "<br />");
     return `Retrieved Context:<br /><br /> ${ragContext}`;
+  };
+
+  const formatLLMResponse = (response: string) => {
+    const regex = /https?:\/\/[^\s()]+/g; // Exclude parentheses from links
+    const matches = response.match(regex);
+    if (matches) {
+      matches.forEach((match) => {
+        response = response.replace(
+          match,
+          `<a href="${match}" target="_blank">${match}</a>`
+        );
+      });
+    }
+    response = response.trim().replace(/\n/g, "<br />");
+    return response;
   };
 
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -185,7 +199,12 @@ function TextBox() {
             />
           )}
           <p className={styles.initialMessage}>{response.initialMessage}</p>
-          <p className={styles.responseText}>{response.chatResponse}</p>
+          <p
+            className={styles.responseText}
+            dangerouslySetInnerHTML={{
+              __html: formatLLMResponse(response.chatResponse),
+            }}
+          />
         </div>
       )}
     </div>

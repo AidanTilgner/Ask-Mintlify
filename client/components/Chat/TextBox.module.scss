@@ -154,6 +154,18 @@
     color: #fff;
     margin: 0;
     padding: 0;
+    word-wrap: break-word;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      word-wrap: break-word;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .spacer {
