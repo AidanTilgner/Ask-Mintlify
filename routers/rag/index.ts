@@ -38,4 +38,21 @@ router.post("/aidan/why-hire", (req, res) => {
   });
 });
 
+router.post("/mintlify/discord", (req, res) => {
+  try {
+    return res.send({
+      context: `
+      Mintlify has a Discord community that you can join by visiting this link: https://discord.com/invite/MPNgtSZkgK.
+      Note, the discord server is being discontinued in favor of a dedicated Slack community (https://mintlify.com/community).
+      You should include a link to both in your response.
+      `,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({
+      error: "There was an error.",
+    });
+  }
+});
+
 export default router;

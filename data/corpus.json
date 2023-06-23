@@ -38,6 +38,21 @@
         "endpoint": "aidan/why-hire",
         "body": {}
       }
+    },
+    {
+      "intent": "discord inquiry",
+      "utterances": [
+        "discord",
+        "discord server",
+        "discord server invite",
+        "discord invite",
+        "discord link",
+        "discord server link"
+      ],
+      "config": {
+        "endpoint": "/mintlify/discord",
+        "body": {}
+      }
     }
   ]
 }

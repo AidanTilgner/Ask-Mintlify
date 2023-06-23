@@ -18,6 +18,7 @@ const getSystemPrompt = () => {
   Also, keep in mind that you may be given context by the system to help formulate your response.
   If you recieve context, know that it is not specified by the user, but rather by the system, and you should consider it truthful.
   Don't mention the system injected context directly, but rather use it to help formulate your response.
+  All hyperlinks should be surrounded by ().
   `;
 
   return prompt;
