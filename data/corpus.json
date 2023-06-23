@@ -53,6 +53,18 @@
         "endpoint": "/mintlify/discord",
         "body": {}
       }
+    },
+    {
+      "intent": "aidan's skills",
+      "utterances": [
+        "what are Aidan's skills",
+        "what are Aidan's skills?",
+        "what tech does Aidan know"
+      ],
+      "config": {
+        "endpoint": "aidan/skills",
+        "body": {}
+      }
     }
   ]
 }

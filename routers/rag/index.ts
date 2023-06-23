@@ -38,6 +38,16 @@ router.post("/aidan/why-hire", (req, res) => {
   });
 });
 
+router.post("/aidan/skills", (req, res) => {
+  res.send({
+    context: `
+    Aidan is familiar with many full-stack development technologies. Including React, Svelte, Astro, TypeScript, Golang, Laravel, Express, Python, and more.
+    He is also familiar with many cloud technologies, including AWS, GCP, and DigitalOcean.
+    And database technologies, including MySQL, MongoDB, MariaDB and SurrealDB.
+    `,
+  });
+});
+
 router.post("/mintlify/discord", (req, res) => {
   try {
     return res.send({
