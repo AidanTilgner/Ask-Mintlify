@@ -28,6 +28,18 @@ function App() {
     >
       <div className={styles.App}>
         <div className={styles.main}>
+          <div className={styles.resources}>
+            <p>
+              Check out the repo{" "}
+              <a
+                href="https://github.com/AidanTilgner/Ask-Mintlify"
+                target="_blank"
+              >
+                here
+              </a>
+              .
+            </p>
+          </div>
           <AskMintlify />
         </div>
       </div>
