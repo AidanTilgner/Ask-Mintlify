@@ -72,9 +72,7 @@ Some pre-made prompts to try with and without the checkbox applied:
 
 TBH, I don't super feel like writing out a detailed explanation of the code, maybe I should write some documentation ;). However, I'll provide a brief overview of how the system works, provided you also don't feel like diving into it yourself.
 
-:::note
-Please don't judge my code too hard I made it in a hurry :O
-:::
+> **Note**: Please don't judge my code too hard I made it in a hurry :O
 
 #### The Frontend
 
